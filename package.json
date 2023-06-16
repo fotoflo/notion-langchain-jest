@@ -5,6 +5,7 @@
     "build": "next build",
     "start": "next start",
     "jest": "jest --watch",
+    "snapshot": "jest --updateSnapshot",
     "test:ci": "jest --ci"
   },
   "dependencies": {

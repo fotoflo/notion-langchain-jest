@@ -1,10 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
-import Layout from '@/components/layout';
+import { useRef, useState, useEffect } from "react";
+import Layout from "@/components/layout";
 
 export default function Home() {
-  const [query, setQuery] = useState<string>('');
+  const [query, setQuery] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [answer, setAnswer] = useState<string>('');
+  const [answer, setAnswer] = useState<string>("");
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -14,20 +14,20 @@ export default function Home() {
 
   async function handleSearch() {
     if (!query) {
-      alert('Please input a question');
+      alert("Please input a question");
       return;
     }
 
-    setAnswer('');
+    setAnswer("");
     setLoading(true);
 
     const question = query.trim();
 
     try {
-      const response = await fetch('/api/chat', {
-        method: 'POST',
+      const response = await fetch("/api/chat", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           question,
@@ -47,12 +47,12 @@ export default function Home() {
       setLoading(false);
     } catch (error) {
       setLoading(false);
-      console.log('error', error);
+      console.log("error", error);
     }
   }
 
   const handleEnter = (e: any) => {
-    if (e.key === 'Enter' && query) {
+    if (e.key === "Enter" && query) {
       handleSearch();
     } else {
       return;
@@ -64,7 +64,10 @@ export default function Home() {
       <Layout>
         <section className="container max-w-xl mx-auto pt-4 pb-6 md:pt-8 md:pb-10 lg:pt-10 lg:pb-16">
           <div className="mx-auto flex flex-col gap-4">
-            <h1 className="text-2xl font-bold leading-[1.1] tracking-tighter text-center mb-3">
+            <h1
+              data-testid="H1"
+              className="text-2xl font-bold leading-[1.1] tracking-tighter text-center mb-3"
+            >
               Chat With Alex&apos;s Notion
             </h1>
             <div className="flex w-full max-w-xl items-center space-x-2">
