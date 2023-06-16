@@ -3,6 +3,7 @@
 
 .env
 *.zip
+docs/
 
 # dependencies
 /node_modules
