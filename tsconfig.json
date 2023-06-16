@@ -19,9 +19,18 @@
       "@/*": ["./*"],
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages.old/*"],
-      "@/styles/*": ["styles/*"]
+      "@/styles/*": ["styles/*"],
+      "@/scripts/*": ["scripts/*"],
+      "@utils/*": ["utils/*"],
+      "@docs/*": ["docs/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "types.d.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "types.d.ts",
+    "scripts/ingest-data.ts"
+  ],
   "exclude": ["node_modules"]
 }

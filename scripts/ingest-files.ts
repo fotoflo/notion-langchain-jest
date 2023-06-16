@@ -15,7 +15,7 @@ export const run = async () => {
 
     /* Split text into chunks */
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 1000,
+      chunkSize: 2000,
       chunkOverlap: 200,
     });
 
@@ -36,14 +36,10 @@ export const run = async () => {
       await PineconeStore.fromDocuments([doc], embeddings, pineconeArgs);
     });
 
-    await Promise.all(promises);
+    return await Promise.all(promises);
   } catch (error) {
-    console.log("error", error);
-    throw new Error("Failed to ingest your data");
+    const ts = new Date().toISOString();
+    console.log(ts + " error", error);
+    throw new Error(ts + " Failed to ingest your data");
   }
 };
-
-(async () => {
-  await run();
-  console.log("ingestion complete");
-})();
