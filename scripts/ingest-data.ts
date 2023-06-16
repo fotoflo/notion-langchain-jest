@@ -1,12 +1,12 @@
-import { RecursiveCharacterTextSplitter } from 'langchain/text_splitter';
-import { OpenAIEmbeddings } from 'langchain/embeddings/openai';
-import { PineconeStore } from 'langchain/vectorstores';
-import { pinecone } from '@/utils/pinecone-client';
-import { processMarkDownFiles } from '@/utils/helpers';
-import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from '@/config/pinecone';
+import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { PineconeStore } from "langchain/vectorstores";
+import { pinecone } from "@/utils/pinecone-client";
+import { processMarkDownFiles } from "@/utils/helpers";
+import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from "@/config/pinecone";
 
 /* Name of directory to retrieve files from. You can change this as required */
-const directoryPath = 'Notion_DB';
+const directoryPath = "docs";
 
 export const run = async () => {
   try {
@@ -20,9 +20,9 @@ export const run = async () => {
     });
 
     const docs = await textSplitter.splitDocuments(rawDocs);
-    console.log('split docs', docs);
+    console.log("split docs", docs);
 
-    console.log('creating vector store...');
+    console.log("creating vector store...");
     /*create and store the embeddings in the vectorStore*/
     const embeddings = new OpenAIEmbeddings();
 
@@ -32,18 +32,18 @@ export const run = async () => {
     };
 
     const promises = docs.map(async (doc) => {
-      console.log('ingesting doc', doc);
+      console.log("ingesting doc", doc);
       await PineconeStore.fromDocuments([doc], embeddings, pineconeArgs);
     });
 
     await Promise.all(promises);
   } catch (error) {
-    console.log('error', error);
-    throw new Error('Failed to ingest your data');
+    console.log("error", error);
+    throw new Error("Failed to ingest your data");
   }
 };
 
 (async () => {
   await run();
-  console.log('ingestion complete');
+  console.log("ingestion complete");
 })();
