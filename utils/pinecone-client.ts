@@ -1,8 +1,11 @@
 import { PineconeClient } from "@pinecone-database/pinecone";
+import { OpenAIEmbeddings } from "langchain/embeddings/openai";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
+import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from "@/config/pinecone";
 
 let pineconeInstance: PineconeClient | null = null;
 
-export async function getPineconeInstance(): Promise<PineconeClient> {
+export async function getPineconeClientInstance(): Promise<PineconeClient> {
   if (pineconeInstance) {
     return pineconeInstance;
   }
@@ -24,4 +27,19 @@ export async function getPineconeInstance(): Promise<PineconeClient> {
     console.error("Failed to initialize Pinecone Client", error);
     throw new Error("Failed to initialize Pinecone Client");
   }
+}
+
+export async function getPineconeStore() {
+  const pinecone = await getPineconeClientInstance();
+  const pineconeArgs = {
+    pineconeIndex: pinecone.Index(PINECONE_INDEX_NAME),
+    namespace: PINECONE_NAME_SPACE,
+  };
+
+  const vectorStore = await PineconeStore.fromExistingIndex(
+    new OpenAIEmbeddings(),
+    pineconeArgs
+  );
+
+  return vectorStore;
 }
