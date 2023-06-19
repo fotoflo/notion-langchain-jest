@@ -3,102 +3,63 @@
 exports[`renders homepage unchanged 1`] = `
 <div>
   <div
-    class="container"
+    class="mx-auto flex flex-col space-y-4"
   >
-    <main>
-      <h1
-        class="title"
-      >
-        Welcome to 
-        <a
-          href="https://nextjs.org"
-        >
-          Next.js!
-        </a>
-      </h1>
-      <p
-        class="description"
-      >
-        Get started by editing 
-        <code>
-          pages/index.js
-        </code>
-      </p>
-      <div
-        class="grid"
-      >
-        <a
-          class="card"
-          href="https://nextjs.org/docs"
-        >
-          <h3>
-            Documentation →
-          </h3>
-          <p>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-        <a
-          class="card"
-          href="https://nextjs.org/learn"
-        >
-          <h3>
-            Learn →
-          </h3>
-          <p>
-            Learn about Next.js in an interactive course with quizzes!
-          </p>
-        </a>
-        <a
-          class="card"
-          href="https://github.com/vercel/next.js/tree/canary/examples"
-        >
-          <h3>
-            Examples →
-          </h3>
-          <p>
-            Discover and deploy boilerplate example Next.js projects.
-          </p>
-        </a>
-        <a
-          class="card"
-          href="https://vercel.com/new"
-        >
-          <h3>
-            Deploy →
-          </h3>
-          <p>
-            Instantly deploy your Next.js site to a public URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-    <footer
-      class="footer"
+    <header
+      class="container sticky top-0 z-40 bg-white"
     >
-      <a
-        href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-        rel="noopener noreferrer"
-        target="_blank"
+      <div
+        class="h-16 border-b border-b-slate-200 py-4"
       >
-        Powered by
-         
-        <span
-          class="logo"
+        <nav
+          class="ml-4 pl-6"
         >
-          <img
-            alt="Vercel Logo"
-            data-nimg="1"
-            decoding="async"
-            height="16"
-            loading="lazy"
-            src="/vercel.svg"
-            style="color: transparent;"
-            width="72"
-          />
-        </span>
-      </a>
-    </footer>
+          <a
+            class="hover:text-slate-600 cursor-pointer"
+            href="#"
+          >
+            Home
+          </a>
+        </nav>
+      </div>
+    </header>
+    <div
+      class="container"
+    >
+      <main
+        class="flex w-full flex-1 flex-col overflow-hidden"
+      >
+        <section
+          class="container max-w-xl mx-auto pt-4 pb-6 md:pt-8 md:pb-10 lg:pt-10 lg:pb-16"
+        >
+          <div
+            class="mx-auto flex flex-col gap-4"
+          >
+            <h1
+              class="text-2xl font-bold leading-[1.1] tracking-tighter text-center mb-3"
+              data-testid="H1"
+            >
+              Chat With Alex's Notion
+            </h1>
+            <div
+              class="flex w-full max-w-xl items-center space-x-2"
+            >
+              <input
+                class="flex h-10 w-full rounded-md border border-slate-300 bg-transparent py-2 px-3 text-sm placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:border-slate-700 dark:text-slate-50 dark:focus:ring-slate-400 dark:focus:ring-offset-slate-900"
+                placeholder="Chat with the bot!"
+                type="text"
+                value=""
+              />
+              <button
+                class="active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800 bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900 h-10 py-2 px-4"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   </div>
 </div>
 `;
