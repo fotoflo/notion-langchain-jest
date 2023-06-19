@@ -1,14 +1,14 @@
-import { basicChat } from '@/src/chat';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { basicChat } from "@/src/chat";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
   const { question } = req.body;
 
   if (!question) {
-    return res.status(400).json({ message: 'No question in the request' });
+    return res.status(400).json({ message: "No question in the request" });
   }
 
   try {
@@ -18,7 +18,7 @@ export default async function handler(
 
     res.status(200).json(response);
   } catch (error: any) {
-    console.log('error', error);
-    res.status(500).json({ error: error?.message || 'Unknown error.' });
+    console.log("error chat api", error);
+    res.status(500).json({ error: error?.message || "Unknown error." });
   }
 }
