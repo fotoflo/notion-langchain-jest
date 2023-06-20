@@ -1,4 +1,4 @@
-import { basicChat } from "@/src/chat";
+import { chatHandler } from "@/src/chat";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -14,9 +14,9 @@ export default async function handler(
   try {
     // OpenAI recommends replacing newlines with spaces for best results
 
-    const response = await basicChat(question);
+    const response = await chatHandler(question);
 
-    res.status(200).json(response);
+    res.status(200).json({ text: response });
   } catch (error: any) {
     console.log("error chat api", error);
     res.status(500).json({ error: error?.message || "Unknown error." });
