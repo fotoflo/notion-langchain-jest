@@ -1,18 +1,14 @@
 import { openai } from "@/utils/openai-client";
 import { getPineconeStore } from "@/utils/pinecone-client";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
-import { BufferMemory } from "langchain/memory";
+import { BaseMemory } from "langchain/memory";
 
-export const basicChat = async (question: string) => {
+export const basicChat = async (question: string, memory: BaseMemory) => {
   const sanitizedQuestion = question.trim().replaceAll("\n", " ");
 
   const vectorStore = await getPineconeStore();
   const model = openai;
   // const memory = new BufferWindowMemory();
-
-  const memory = new BufferMemory({
-    memoryKey: "chat_history",
-  });
 
   const chain = ConversationalRetrievalQAChain.fromLLM(
     model,
