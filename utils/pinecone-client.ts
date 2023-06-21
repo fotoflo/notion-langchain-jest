@@ -29,11 +29,16 @@ export async function getPineconeClientInstance(): Promise<PineconeClient> {
   }
 }
 
-export async function getPineconeStore() {
+interface PineconeOptions {
+  indexName?: string;
+  namespace?: string;
+}
+
+export async function getPineconeStore(options: PineconeOptions = {}) {
   const pinecone = await getPineconeClientInstance();
   const pineconeArgs = {
-    pineconeIndex: pinecone.Index(PINECONE_INDEX_NAME),
-    namespace: PINECONE_NAME_SPACE,
+    pineconeIndex: pinecone.Index(options.indexName ?? PINECONE_INDEX_NAME),
+    namespace: options.namespace ?? PINECONE_NAME_SPACE,
   };
 
   const vectorStore = await PineconeStore.fromExistingIndex(
