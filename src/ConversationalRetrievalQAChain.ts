@@ -7,11 +7,8 @@ export const chatHandlerWithBufferWindowMemory = async (
   question: string,
   memory: BaseMemory
 ) => {
-  const sanitizedQuestion = question.trim().replaceAll("\n", " ");
-
-  const vectorStore = await getPineconeStore();
   const model = openai;
-  // const memory = new BufferWindowMemory();
+  const vectorStore = await getPineconeStore();
 
   const chain = ConversationalRetrievalQAChain.fromLLM(
     model,
@@ -22,6 +19,7 @@ export const chatHandlerWithBufferWindowMemory = async (
     }
   );
 
+  const sanitizedQuestion = question.trim().replaceAll("\n", " ");
   const response = await chain.call({
     question: sanitizedQuestion,
   });
