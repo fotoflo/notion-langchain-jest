@@ -1,4 +1,4 @@
-import { chatHandler } from "@/src/chat";
+import { chatHandler } from "@/src/VectorDBQAChain";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(

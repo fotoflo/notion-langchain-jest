@@ -2,7 +2,7 @@ import { VectorDBQAChain } from "langchain/chains";
 import { openai } from "@/utils/openai-client";
 import { getPineconeStore } from "@/utils/pinecone-client";
 
-export const basicChat = async (question: string) => {
+export const chatHandler = async (question: string) => {
   const model = openai;
   const vectorStore = await getPineconeStore();
 
