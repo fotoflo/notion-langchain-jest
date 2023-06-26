@@ -3,7 +3,10 @@ import { getPineconeStore } from "@/utils/pinecone-client";
 import { ConversationalRetrievalQAChain } from "langchain/chains";
 import { BaseMemory } from "langchain/memory";
 
-export const basicChat = async (question: string, memory: BaseMemory) => {
+export const chatHandlerWithBufferWindowMemory = async (
+  question: string,
+  memory: BaseMemory
+) => {
   const sanitizedQuestion = question.trim().replaceAll("\n", " ");
 
   const vectorStore = await getPineconeStore();
