@@ -1,9 +1,32 @@
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
 import { PineconeStore } from "langchain/vectorstores/pinecone";
-import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from "@/config/pinecone";
+
+const PINECONE_INDEX_NAME = "notionindex";
+const PINECONE_NAME_SPACE = "notion-langchain"; //namespace is optional for your vectors
 
 let pineconeInstance: PineconeClient | null = null;
+
+interface PineconeOptions {
+  indexName?: string;
+  namespace?: string;
+}
+
+// this is the one we want to use to get the retriever
+export async function getPineconeStore(options: PineconeOptions = {}) {
+  const pinecone = await getPineconeClientInstance();
+  const pineconeArgs = {
+    pineconeIndex: pinecone.Index(options.indexName ?? PINECONE_INDEX_NAME),
+    namespace: options.namespace ?? PINECONE_NAME_SPACE,
+  };
+
+  const vectorStore = await PineconeStore.fromExistingIndex(
+    new OpenAIEmbeddings(),
+    pineconeArgs
+  );
+
+  return vectorStore;
+}
 
 export async function getPineconeClientInstance(): Promise<PineconeClient> {
   if (pineconeInstance) {
@@ -27,24 +50,4 @@ export async function getPineconeClientInstance(): Promise<PineconeClient> {
     console.error("Failed to initialize Pinecone Client", error);
     throw new Error("Failed to initialize Pinecone Client");
   }
-}
-
-interface PineconeOptions {
-  indexName?: string;
-  namespace?: string;
-}
-
-export async function getPineconeStore(options: PineconeOptions = {}) {
-  const pinecone = await getPineconeClientInstance();
-  const pineconeArgs = {
-    pineconeIndex: pinecone.Index(options.indexName ?? PINECONE_INDEX_NAME),
-    namespace: options.namespace ?? PINECONE_NAME_SPACE,
-  };
-
-  const vectorStore = await PineconeStore.fromExistingIndex(
-    new OpenAIEmbeddings(),
-    pineconeArgs
-  );
-
-  return vectorStore;
 }

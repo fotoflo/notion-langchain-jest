@@ -15,5 +15,5 @@ describe("getConvoChain", () => {
 
     console.log(`Response1: `, response1);
     expect(JSON.parse(response1.response)[0].data.content).toMatch(/alex/i);
-  }, 20000);
+  }, 30000);
 });

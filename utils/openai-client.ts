@@ -8,6 +8,7 @@ if (!process.env.OPENAI_API_KEY) {
 }
 
 export const openai = new OpenAI({
+  modelName: "text-davinci-003",
   temperature: 0,
   maxTokens: 500,
 });
