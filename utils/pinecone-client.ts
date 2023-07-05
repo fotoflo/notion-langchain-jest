@@ -1,6 +1,9 @@
 import { PineconeClient } from "@pinecone-database/pinecone";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { PineconeStore } from "langchain/vectorstores/pinecone";
+import {
+  PineconeLibArgs,
+  PineconeStore,
+} from "langchain/vectorstores/pinecone";
 
 const PINECONE_INDEX_NAME = "notionindex";
 const PINECONE_NAME_SPACE = "notion-langchain"; //namespace is optional for your vectors
@@ -50,4 +53,16 @@ export async function getPineconeClientInstance(): Promise<PineconeClient> {
     console.error("Failed to initialize Pinecone Client", error);
     throw new Error("Failed to initialize Pinecone Client");
   }
+}
+
+export async function ingestDoc(doc: Document) {
+  const pinecone = await getPineconeClientInstance();
+
+  const pineconeArgs: PineconeLibArgs = {
+    pineconeIndex: pinecone.Index(PINECONE_INDEX_NAME),
+    namespace: PINECONE_NAME_SPACE,
+  };
+  const embeddings = new OpenAIEmbeddings();
+
+  return await PineconeStore.fromDocuments([doc], embeddings, pineconeArgs);
 }

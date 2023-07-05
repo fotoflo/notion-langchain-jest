@@ -1,21 +1,20 @@
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
 import { OpenAIEmbeddings } from "langchain/embeddings/openai";
-import { PineconeStore } from "langchain/vectorstores";
-import { pinecone } from "@/utils/pinecone-client";
 import { processMarkDownFiles } from "@/utils/helpers";
-import { PINECONE_INDEX_NAME, PINECONE_NAME_SPACE } from "@/config/pinecone";
+import { ingestDoc } from "@/utils/pinecone-client";
+import { PineconeStore } from "langchain/vectorstores/pinecone";
 
 /* Name of directory to retrieve files from. You can change this as required */
 const directoryPath = "docs";
 
-export const run = async () => {
+export const ingest = async (count = 100000) => {
   try {
     /*load raw docs from the markdown files in the directory */
     const rawDocs = await processMarkDownFiles(directoryPath);
 
     /* Split text into chunks */
     const textSplitter = new RecursiveCharacterTextSplitter({
-      chunkSize: 2000,
+      chunkSize: 10000,
       chunkOverlap: 200,
     });
 
@@ -26,14 +25,16 @@ export const run = async () => {
     /*create and store the embeddings in the vectorStore*/
     const embeddings = new OpenAIEmbeddings();
 
-    const pineconeArgs = {
-      pineconeIndex: pinecone.Index(PINECONE_INDEX_NAME),
-      namespace: PINECONE_NAME_SPACE,
-    };
-
-    const promises = docs.map(async (doc) => {
+    const promises: Promise<PineconeStore>[] = [];
+    docs.some(async (doc, i) => {
+      if (i > count) {
+        return true;
+      }
       console.log("ingesting doc", doc);
-      await PineconeStore.fromDocuments([doc], embeddings, pineconeArgs);
+      const promise = ingestDoc(doc);
+      promises.push(promise);
+
+      return false;
     });
 
     return await Promise.all(promises);
