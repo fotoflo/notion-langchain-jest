@@ -5,28 +5,28 @@ import { PineconeStore } from "langchain/vectorstores/pinecone";
 
 /* Name of directory to retrieve files from. You can change this as required */
 const directoryPath = "docs";
-const defaultCount = 300;
+const defaultDocCount = 300;
 const defaultChunkSize = 2000;
 const defaultChunkOverlap = 200;
 
 interface IngestProps {
-  count?: number;
+  docCount?: number;
   chunkSize?: number;
   chunkOverlap?: number;
 }
 
 export const ingest = async ({
-  count = defaultCount,
+  docCount = defaultDocCount,
   chunkSize = defaultChunkSize,
   chunkOverlap = defaultChunkOverlap,
 }: IngestProps = {}): Promise<PineconeStore[]> => {
-  if (count > defaultCount) {
-    console.warn(`Warning: The count is larger than ${defaultCount}.`);
+  if (docCount > defaultDocCount) {
+    console.warn(`Warning: The count is larger than ${defaultDocCount}.`);
   }
 
   try {
     /* Load raw docs from the markdown files in the directory */
-    const rawDocs = await processMarkDownFiles(directoryPath, count);
+    const rawDocs = await processMarkDownFiles(directoryPath, docCount);
 
     /* Split text into chunks */
     const textSplitter = new RecursiveCharacterTextSplitter({
@@ -39,7 +39,7 @@ export const ingest = async ({
 
     const promises: Promise<PineconeStore>[] = [];
     docs.some(async (doc, i) => {
-      if (i > count) {
+      if (i > docCount) {
         return true;
       }
       console.log("Ingesting doc:", doc);

@@ -9,7 +9,6 @@ export default async function handler(
     // OpenAI recommends replacing newlines with spaces for best results
 
     const response = await ingest();
-    debugger;
 
     res.status(200).json(response);
   } catch (error: any) {
