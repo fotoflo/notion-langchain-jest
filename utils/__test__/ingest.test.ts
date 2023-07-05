@@ -2,7 +2,7 @@ import { ingest } from "@/scripts/ingest-files";
 
 describe("ingest", () => {
   it("it should ingest the docs", async () => {
-    const response = await ingest(2);
+    const response = await ingest({ count: 1 });
     expect(response).toBeTruthy();
-  }, 40000);
+  }, 10000);
 });

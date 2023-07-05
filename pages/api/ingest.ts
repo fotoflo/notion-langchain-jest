@@ -1,4 +1,4 @@
-import { run } from "@/scripts/ingest-files";
+import { ingest } from "@/scripts/ingest-files";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -8,7 +8,7 @@ export default async function handler(
   try {
     // OpenAI recommends replacing newlines with spaces for best results
 
-    const response = await run();
+    const response = await ingest();
     debugger;
 
     res.status(200).json(response);
