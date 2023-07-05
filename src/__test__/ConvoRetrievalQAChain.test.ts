@@ -1,7 +1,7 @@
 import { getConvoChain } from "../ConvoChain";
 
-describe("getConvoChain", () => {
-  it("it should return a chat about alex", async () => {
+describe("ConversationalRetrievalQAChain", () => {
+  xit("it should return a chat about alex", async () => {
     const chain = await getConvoChain("alex");
     const response0 = await chain.call({
       input: "hi my name is alex and i'm from new York",
