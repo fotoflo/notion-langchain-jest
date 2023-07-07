@@ -14,7 +14,7 @@ describe("ConversationalRetrievalQAChain", () => {
     });
 
     const response2 = await chain.call({
-      input: "and who is keefe?",
+      input: "and what is the vacation policy?",
     });
 
     console.log(`Response1: `, response1);
@@ -23,6 +23,8 @@ describe("ConversationalRetrievalQAChain", () => {
     console.log(`Response2: `, response2);
 
     debugger;
-    expect(JSON.parse(response2.response)[0].data.content).toMatch(/keefe/i);
+    expect(JSON.parse(response2.response)[0].data.content).toMatch(
+      /unlimited paid leave/i
+    );
   }, 40000);
 });
